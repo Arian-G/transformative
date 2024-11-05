@@ -71,7 +71,9 @@ class tf_gui:
         if current_value < min:
             dpg.set_value( sender, min )
         elif current_value > max:
-            dpg.set_value( sender, max)
+            dpg.set_value( sender, max )
 
+    def select_file( option ):
+        pass
 
 tf_gui( )
