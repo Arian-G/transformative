@@ -5,12 +5,13 @@ class tf_gui:
     def __init__( self ):
         dpg.create_context( )
         self.root = dpg.add_window( tag = "Primary Window" )
-        dpg.create_viewport( title = "Transformative: A Graphics Application", width = 800, height = 600 )
+        dpg.create_viewport( title = "Transformative: A Graphics Application", width = 900, height = 700 )
         dpg.setup_dearpygui( )
         dpg.show_viewport( )
         dpg.set_primary_window( "Primary Window", True )
         self.create_menu_bar( )
-        # self.create_
+        self.create_transformations_menu( )
+        self.create_canvas( )
         self.main_loop( )
 
     def main_loop( self ):
@@ -60,8 +61,7 @@ class tf_gui:
                 "\nand smooth object representations."
             )
 
-        with dpg.group( horizontal = True, parent = about_menu ):
-            dpg.add_text( "" )
+        with dpg.group( horizontal = True, parent = about_menu ): dpg.add_text( "" ) # Spacing.
 
         with dpg.group( horizontal = True, parent = about_menu ):
             dpg.add_text( "Transformative | Version 0.1" )
@@ -75,5 +75,59 @@ class tf_gui:
 
     def select_file( option ):
         pass
+
+    def create_transformations_menu( self ):
+        transformation_menu = dpg.add_tree_node( label = "Transformations", parent = self.root )
+        ##### Translation
+        with dpg.tree_node( label = "Translation", parent = transformation_menu ):
+            with dpg.group( horizontal = True ):
+                dpg.add_text( "X Axis (Dx):" )
+                dpg.add_input_float( default_value = 0.0, width = 100, 
+                                     callback = lambda s: self.enforce_bounds( s, -100, 100 ), format = "%.1f" )
+                dpg.add_text( "Y Axis (Dy):" )
+                dpg.add_input_float( default_value = 0.0, width = 100, 
+                                     callback = lambda s: self.enforce_bounds( s, -100, 100 ), format = "%.1f" )
+                dpg.add_text( "Z Axis (Dz):" )
+                dpg.add_input_float( default_value = 0.0, width = 100, 
+                                     callback = lambda s: self.enforce_bounds( s, -100, 100 ), format = "%.1f" )
+            dpg.add_button( label = "Translate" )
+            # with dpg.group( horizontal = True, parent = transformation_menu ): dpg.add_text( "" ) # Spacing
+
+        ##### Scaling
+        with dpg.tree_node( label = "Scaling", parent = transformation_menu ):
+            with dpg.group( horizontal = True ):
+                dpg.add_text( "X Axis (Sx):" )
+                dpg.add_input_float( default_value = 0.0, width = 100, 
+                                     callback = lambda s: self.enforce_bounds( s, -100, 100 ), format = "%.1f" )
+                dpg.add_text( "Y Axis (Sy):" )
+                dpg.add_input_float( default_value = 0.0, width = 100, 
+                                     callback = lambda s: self.enforce_bounds( s, -100, 100 ), format = "%.1f" )
+                dpg.add_text( "Z Axis (Sz):" )
+                dpg.add_input_float( default_value = 0.0, width = 100,
+                                     callback = lambda s: self.enforce_bounds( s, -100, 100 ), format = "%.1f" )
+            dpg.add_button( label = "Scale    " )
+            # with dpg.group( horizontal = True, parent = transformation_menu ): dpg.add_text( "" ) # Spacing
+
+        ##### Rotation
+        with dpg.tree_node( label = "Rotation", parent = transformation_menu ):
+            with dpg.group( horizontal = True ):
+                dpg.add_text( "X Axis (Rx):" )
+                dpg.add_input_float( default_value = 0.0, width = 100, 
+                                     callback = lambda s: self.enforce_bounds( s, -100, 100 ), format = "%.1f" )
+                dpg.add_text( "Y Axis (Ry):" )
+                dpg.add_input_float( default_value = 0.0, width = 100, 
+                                     callback = lambda s: self.enforce_bounds( s, -100, 100 ), format = "%.1f" )
+                dpg.add_text( "Z Axis (Rz):" )
+                dpg.add_input_float( default_value = 0.0, width = 100, 
+                                     callback = lambda s: self.enforce_bounds( s, -100, 100 ), format = "%.1f" )
+            dpg.add_button( label = "Rotate   " )
+            # with dpg.group( horizontal = True, parent = transformation_menu ): dpg.add_text( "" ) # Spacing
+
+    def create_canvas( self ):
+        canvas_menu = dpg.add_tree_node( label = "Canvas", parent = self.root, selectable = True )
+        with dpg.group( parent = canvas_menu ):
+            with dpg.drawlist( width = 1920, height = 500, tag = "Canvas" ):
+                dpg.draw_rectangle(( 100, 100 ), ( 200, 200 ), color = ( 255, 0, 0, 255 ), fill =( 200, 0, 0, 150 ))
+
 
 tf_gui( )
