@@ -1,6 +1,8 @@
 import dearpygui.dearpygui as dpg
 import os
 
+import tf_core
+
 class tf_gui:
     def __init__( self ):
         dpg.create_context( )
@@ -12,6 +14,7 @@ class tf_gui:
         self.create_menu_bar( )
         self.create_transformations_menu( )
         self.create_canvas( )
+        self.create_status( )
         self.main_loop( )
 
     def main_loop( self ):
@@ -73,23 +76,20 @@ class tf_gui:
         elif current_value > max:
             dpg.set_value( sender, max )
 
-    def select_file( option ):
-        pass
-
     def create_transformations_menu( self ):
         transformation_menu = dpg.add_tree_node( label = "Transformations", parent = self.root )
         ##### Translation
         with dpg.tree_node( label = "Translation", parent = transformation_menu ):
             with dpg.group( horizontal = True ):
                 dpg.add_text( "X Axis (Dx):" )
-                dpg.add_input_float( default_value = 0.0, width = 100, 
-                                     callback = lambda s: self.enforce_bounds( s, -100, 100 ), format = "%.1f" )
+                dpg.add_input_float( default_value = 0.0, width = 100, step = 1, 
+                                     callback = lambda s: self.enforce_bounds( s, -10, 10 ), format = "%.1f" )
                 dpg.add_text( "Y Axis (Dy):" )
-                dpg.add_input_float( default_value = 0.0, width = 100, 
-                                     callback = lambda s: self.enforce_bounds( s, -100, 100 ), format = "%.1f" )
+                dpg.add_input_float( default_value = 0.0, width = 100, step = 1, 
+                                     callback = lambda s: self.enforce_bounds( s, -10, 10 ), format = "%.1f" )
                 dpg.add_text( "Z Axis (Dz):" )
-                dpg.add_input_float( default_value = 0.0, width = 100, 
-                                     callback = lambda s: self.enforce_bounds( s, -100, 100 ), format = "%.1f" )
+                dpg.add_input_float( default_value = 0.0, width = 100, step = 1, 
+                                     callback = lambda s: self.enforce_bounds( s, -10, 10 ), format = "%.1f" )
             dpg.add_button( label = "Translate" )
             # with dpg.group( horizontal = True, parent = transformation_menu ): dpg.add_text( "" ) # Spacing
 
@@ -97,14 +97,14 @@ class tf_gui:
         with dpg.tree_node( label = "Scaling", parent = transformation_menu ):
             with dpg.group( horizontal = True ):
                 dpg.add_text( "X Axis (Sx):" )
-                dpg.add_input_float( default_value = 0.0, width = 100, 
-                                     callback = lambda s: self.enforce_bounds( s, -100, 100 ), format = "%.1f" )
+                dpg.add_input_float( default_value = 1.0, width = 100, step = 0.1,
+                                     callback = lambda s: self.enforce_bounds( s, 0.1, 10 ), format = "%.1f" )
                 dpg.add_text( "Y Axis (Sy):" )
-                dpg.add_input_float( default_value = 0.0, width = 100, 
-                                     callback = lambda s: self.enforce_bounds( s, -100, 100 ), format = "%.1f" )
+                dpg.add_input_float( default_value = 1.0, width = 100, step = 0.1, 
+                                     callback = lambda s: self.enforce_bounds( s, 0.1, 10 ), format = "%.1f" )
                 dpg.add_text( "Z Axis (Sz):" )
-                dpg.add_input_float( default_value = 0.0, width = 100,
-                                     callback = lambda s: self.enforce_bounds( s, -100, 100 ), format = "%.1f" )
+                dpg.add_input_float( default_value = 1.0, width = 100, step = 0.1,
+                                     callback = lambda s: self.enforce_bounds( s, 0.1, 10 ), format = "%.1f" )
             dpg.add_button( label = "Scale    " )
             # with dpg.group( horizontal = True, parent = transformation_menu ): dpg.add_text( "" ) # Spacing
 
@@ -112,14 +112,14 @@ class tf_gui:
         with dpg.tree_node( label = "Rotation", parent = transformation_menu ):
             with dpg.group( horizontal = True ):
                 dpg.add_text( "X Axis (Rx):" )
-                dpg.add_input_float( default_value = 0.0, width = 100, 
-                                     callback = lambda s: self.enforce_bounds( s, -100, 100 ), format = "%.1f" )
+                dpg.add_input_float( default_value = 0.0, width = 100, step = 1,
+                                     callback = lambda s: self.enforce_bounds( s, -360, 360 ), format = "%.1f" )
                 dpg.add_text( "Y Axis (Ry):" )
-                dpg.add_input_float( default_value = 0.0, width = 100, 
-                                     callback = lambda s: self.enforce_bounds( s, -100, 100 ), format = "%.1f" )
+                dpg.add_input_float( default_value = 0.0, width = 100, step = 1,
+                                     callback = lambda s: self.enforce_bounds( s, -360, 360 ), format = "%.1f" )
                 dpg.add_text( "Z Axis (Rz):" )
-                dpg.add_input_float( default_value = 0.0, width = 100, 
-                                     callback = lambda s: self.enforce_bounds( s, -100, 100 ), format = "%.1f" )
+                dpg.add_input_float( default_value = 0.0, width = 100, step = 1,
+                                     callback = lambda s: self.enforce_bounds( s, -360, 360 ), format = "%.1f" )
             dpg.add_button( label = "Rotate   " )
             # with dpg.group( horizontal = True, parent = transformation_menu ): dpg.add_text( "" ) # Spacing
 
@@ -129,5 +129,34 @@ class tf_gui:
             with dpg.drawlist( width = 1920, height = 500, tag = "Canvas" ):
                 dpg.draw_rectangle(( 100, 100 ), ( 200, 200 ), color = ( 255, 0, 0, 255 ), fill =( 200, 0, 0, 150 ))
 
+    def create_status( self ):
+        with dpg.window( label = "Error", modal = True, show = False, tag = "status", width = 100, height = 100 ):
+            self.status_text = dpg.add_text("")
+
+    def show_status( self, s ):
+        dpg.set_value( self.status_text, s )
+        dpg.show_item( "status" )
+
+    def select_file( self, option ):
+        f_dialog = dpg.add_file_dialog( show = True, default_path = os.getcwd( ), height = 300 )
+        dpg.add_file_extension( ".txt", parent = f_dialog )
+        if option == "load":
+            dpg.set_item_callback( f_dialog, self.load )
+        elif option == "save":
+            dpg.set_item_callback( f_dialog, self.save )
+        else:
+            dpg.set_item_callback( f_dialog, self.save_as )
+
+    def load( self, _, app_data ):
+        filename = app_data[ "file_name" ]
+        res, s = tf_core( ).load( filename )
+        if not res:
+            self.show_status( s )
+
+    def save( self, _, app_data ):
+        pass
+    
+    def save_as( self, _, app_data ):
+        pass
 
 tf_gui( )
