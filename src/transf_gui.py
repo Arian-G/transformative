@@ -1,7 +1,7 @@
 import dearpygui.dearpygui as dpg
 import os
 
-import trans_core
+import transf_core
 
 class tf_gui:
     def __init__( self ):
@@ -185,7 +185,7 @@ class tf_gui:
 
     def load( self, _, app_data ):
         filename = app_data[ "file_name" ]
-        res, s = trans_core( ).load( filename )
+        res, s = transf_core( ).load( filename )
         if not res:
             self.show_status( s )
 
