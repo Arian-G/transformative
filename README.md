@@ -1,12 +1,11 @@
 # Transformative: A Graphics Application
 ## About
-This program implements a graphics pipeline, <br>
-including window to viewport mapping, parallel <br>
-and perspective projections, object <br>
-transformations, camera flying, multiple camera views, <br>
-and polygonal and smooth object representations.
+This program implements a graphics pipeline, including window to viewport mapping, <br>
+parallel and perspective projections, object transformations, camera flying, multiple <br> 
+camera views, and polygonal and smooth object representations.
 ## Usages
-- Use `python tf_gui.py` to run the program.
+- Use `python transf_gui.py` to run the program.
+- Use `python transf_test.py` to unit test the program.
 > [!NOTE]
 > This program requires DearPyGui to run.
 ## Contributors
