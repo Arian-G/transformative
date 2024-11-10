@@ -1,7 +1,7 @@
 import dearpygui.dearpygui as dpg
 import os
 
-from transf_core import transf_core
+# from transf_core import transf_core
 
 class tf_gui:
     def __init__( self ):
