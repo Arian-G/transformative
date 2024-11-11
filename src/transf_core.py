@@ -1,8 +1,17 @@
+# transf_core
+# Core Graphics Engine
+
 class transf_core:
+    """
+    """
     def __init__( self ):
+        """
+        """
         pass
 
-    def load( self, filename ):
+    def load( self, filename ) -> None:
+        """
+        """
         try:
             with open( filename, "r" ) as file:
                 file.seek( 0 )
