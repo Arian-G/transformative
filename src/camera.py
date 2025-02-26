@@ -10,7 +10,7 @@ class camera( ABC ):
     """
     __count = 1
 
-    def __init__( self, name = f"camera_{__count}" ):
+    def __init__( self, name = f"Camera {__count}" ):
         """
         """
         self.name = name
@@ -52,7 +52,7 @@ class parallel_camera( camera ):
     def __init__( self, name ):
         super( ).__init__( name )
 
-    def create_proj_matrix( self ) -> None:
+    def __create_proj_matrix( self ) -> None:
         """
         """
         # Create temps.
@@ -92,12 +92,12 @@ class parallel_camera( camera ):
         vpn = np.dot( x_rot_vpn, vpn )
         vup = np.dot( x_rot_vpn, vup )
     
-    def clip( self ) -> None:
+    def __clip( self ) -> None:
         """
         """
         pass
 
-    def project( self ) -> None:
+    def __project( self ) -> None:
         """
         """
         pass
@@ -110,17 +110,17 @@ class perspective_camera( camera ):
         super( ).__init__( name )
         self.zmin = None
 
-    def create_proj_matrix( self ) -> None:
+    def __create_proj_matrix( self ) -> None:
         """
         """
         pass
     
-    def clip( self ) -> None:
+    def __clip( self ) -> None:
         """
         """
         pass
 
-    def project( self ) -> None:
+    def __project( self ) -> None:
         """
         """
         pass

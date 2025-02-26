@@ -2,7 +2,7 @@
 ## About
 This program implements a graphics pipeline, including window to viewport mapping, <br>
 parallel and perspective projections, object transformations, camera flying, multiple <br> 
-camera views, and polygonal and smooth object representations. <br> <br>
+camera views, and polygonal and smooth object representations. Certain features are still in development. <br> <br>
 The objects are stored as .obj files, in `/assets` with the following representation:
 ```
 v 1 1 0      # Defines a vertex at (1, 1, 0)
