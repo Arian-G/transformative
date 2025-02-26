@@ -19,13 +19,13 @@ class tf_gui:
         self.create_theme( )
         self.main_loop( )
 
-    def main_loop( self ):
+    def main_loop( self ) -> None:
         # dpg.start_dearpygui( )
         while dpg.is_dearpygui_running( ):
             dpg.render_dearpygui_frame( )
         dpg.destroy_context( )
 
-    def create_menu_bar( self ):
+    def create_menu_bar( self ) -> None:
         ##### Menu Bar
         menu_bar = dpg.add_menu_bar( parent = self.root )
         file_menu = dpg.add_menu( label = "File", parent = menu_bar )
@@ -71,7 +71,7 @@ class tf_gui:
         with dpg.group( horizontal = True, parent = about_menu ):
             dpg.add_text( "Transformative | Version 0.1" )
 
-    def select_file( self, option ):
+    def select_file( self, option ) -> None:
         f_dialog = dpg.add_file_dialog( show = True, default_path = os.getcwd( ), height = 300 )
         dpg.add_file_extension( ".txt", parent = f_dialog )
         if option == "load":
@@ -81,19 +81,19 @@ class tf_gui:
         else:
             dpg.set_item_callback( f_dialog, self.save_as )
 
-    def load( self, _, app_data ):
+    def load( self, _, app_data ) -> None:
         filename = app_data[ "file_name" ]
         res, s = transf_core( ).load( filename )
         if not res:
             self.show_status( s )
 
-    def save( self, _, app_data ):
+    def save( self, _, app_data ) -> None:
         pass
     
-    def save_as( self, _, app_data ):
+    def save_as( self, _, app_data ) -> None:
         pass
 
-    def create_transformations_menu( self ):
+    def create_transformations_menu( self ) -> None:
         transformation_menu = dpg.add_tree_node( label = "Transformations", parent = self.root, selectable = True )
         ##### Translation
         with dpg.tree_node( label = "Translation", parent = transformation_menu, selectable = True ):
@@ -166,7 +166,7 @@ class tf_gui:
             dpg.disable_item( "a_input" )
             dpg.disable_item( "b_input" )
 
-    def axis_selection( self, sender ):
+    def axis_selection( self, sender ) -> None:
         curr_axis = dpg.get_value( sender )
         if curr_axis == "X-axis":
             dpg.set_value( "deg_label", "Rx:" )
@@ -185,7 +185,7 @@ class tf_gui:
             dpg.enable_item( "a_input" )
             dpg.enable_item( "b_input" )
 
-    def create_camera_menu( self ):
+    def create_camera_menu( self ) -> None:
         with dpg.tree_node( label = "Camera", parent = self.root, selectable = True ):
             with dpg.group( horizontal = True ):
                 dpg.add_text( "Camera:" )
@@ -203,21 +203,21 @@ class tf_gui:
             dpg.add_button( label = "Fly", width = 80 )
             dpg.add_spacer( height = 10 )
 
-    def create_canvas( self ):
+    def create_canvas( self ) -> None:
         canvas_menu = dpg.add_tree_node( label = "Canvas", parent = self.root, selectable = True )
         with dpg.group( parent = canvas_menu ):
             with dpg.drawlist( width = 1920, height = 500, tag = "Canvas" ):
                 dpg.draw_rectangle(( 100, 100 ), ( 200, 200 ), color = ( 255, 0, 0, 255 ), fill = ( 200, 0, 0, 150 ))
 
-    def create_status( self ):
+    def create_status( self ) -> None:
         with dpg.window( label = "Error", modal = True, show = False, tag = "status", width = 100, height = 100 ):
             self.status_text = dpg.add_text( "" )
 
-    def show_status( self, s ):
+    def show_status( self, s ) -> None:
         dpg.set_value( self.status_text, s )
         dpg.show_item( "status" )
 
-    def create_theme( self ):    
+    def create_theme( self ) -> None:
         prim_color = ( 66, 165, 245 )
         light_bg = ( 33, 33, 33 )
         darker_bg = ( 55, 55, 55 )
@@ -285,7 +285,7 @@ class tf_gui:
                 
         dpg.bind_theme( global_theme )
 
-    def enforce_bounds( self, sender, min, max ):
+    def enforce_bounds( self, sender, min, max ) -> None:
         current_value = dpg.get_value( sender )
         if current_value < min:
             dpg.set_value( sender, min )
