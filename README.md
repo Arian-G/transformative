@@ -5,20 +5,24 @@
 ## About
 This program implements a graphics pipeline, including window to viewport mapping, <br>
 parallel and perspective projections, object transformations, camera flying, multiple <br> 
-camera views, polygonal and smooth object representations, and raytracing. Certain features are still in development.
+camera views, polygonal and smooth object representations, and raytracing. Certain features are <br>
+still in development.
 > [!NOTE]
 > This program is a modification of an assignment for UTA's CSE 4304 Computer Graphics.
 
 <br>
 
-The objects are stored as .obj files, in `/assets` with the following representation:
+The objects are stored as .obj files, in `/assets`, with the following representation:
 ```
 v 1 1 0      # Defines a vertex at (1, 1, 0)
 v 0.5 0.5 1
 f 4 2 1      # Defines a face of vertices 4, 2, 1
 f 3 4 1
 ```
-The camera(s) are stored as .cset files, in `/src/util` with the following representation:
+
+<br>
+
+The camera(s) are stored as .cset files, in `/src/util`, with the following representation:
 ```
 c                     # Defines a new camera
 i front               # Camera name
