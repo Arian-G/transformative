@@ -7,8 +7,6 @@ This program implements a graphics pipeline, including window to viewport mappin
 parallel and perspective projections, object transformations, camera flying, multiple <br> 
 camera views, polygonal and smooth object representations, and raytracing. Certain features are <br>
 still in development.
-> [!NOTE]
-> This program is a modification of an assignment for UTA's CSE 4304 Computer Graphics.
 
 <br>
 
@@ -41,8 +39,11 @@ s 0.1 0.1 0.4 0.4     # Viewport
 - Use `python transf_test.py` to unit test the program.
 > [!NOTE]
 > This program requires DearPyGui to run.
-
 <br>
 
 ## Creators
 - Arian G.
+
+<br>
+
+<sub>This program is a modification of an assignment for UTA's CSE 4304 Computer Graphics.</sub>
